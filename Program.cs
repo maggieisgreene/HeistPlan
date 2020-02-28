@@ -7,9 +7,9 @@ namespace HeistPlan
   {
     static void Main(string[] args)
     {
-      // Phase One
-
       Console.WriteLine("Plan your heist!");
+
+      List<Dictionary<string, string>> players = new List<Dictionary<string, string>>();
 
       Dictionary<string, string> player = new Dictionary<string, string>();
 
@@ -25,6 +25,8 @@ namespace HeistPlan
       player.Add("name", playerNameInput);
       player.Add("skill level", playerSkillInput);
       player.Add("courage factor", playerCourageInput);
+
+      players.Add(player);
 
       Console.WriteLine("Congrats! You've successfully created a new player!");
 
