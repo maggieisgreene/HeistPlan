@@ -8,7 +8,8 @@ namespace HeistPlan
     static void Main(string[] args)
     {
       Console.WriteLine("Plan your heist!");
-      int bankDifficulty = 100;
+      Console.WriteLine("What is the difficulty level of the bank you are robbing?");
+      int bankDifficulty = int.Parse(Console.ReadLine());
 
       List<Dictionary<string, string>> team = new List<Dictionary<string, string>>();
 
@@ -45,22 +46,41 @@ namespace HeistPlan
         }
       }
 
-      int overallSkill = 0;
+      Console.WriteLine("How many trial runs would you like to undergo?");
+      int trialRuns = int.Parse(Console.ReadLine());
 
-      foreach (Dictionary<string, string> member in team)
+      int failedAttempts = 0;
+      int successfulAttempts = 0;
+
+      for (int i = 0; i < trialRuns; i++)
       {
-        int playerSkill = int.Parse(member["skill level"]);
-        overallSkill += playerSkill;
+        int randomLuck = new Random().Next(-10, 11);
+        int successRate = bankDifficulty + randomLuck;
+
+        int overallSkill = 0;
+
+        foreach (Dictionary<string, string> member in team)
+        {
+          int playerSkill = int.Parse(member["skill level"]);
+          overallSkill += playerSkill;
+        }
+
+        Console.WriteLine($"The bank's level of difficulty is {successRate}.");
+        Console.WriteLine($"Your team's overall skill level is {overallSkill}.");
+
+        if (successRate <= overallSkill)
+        {
+          Console.WriteLine("Success! Your team had enough skill to rob this bank!");
+          successfulAttempts++;
+        }
+        else
+        {
+          Console.WriteLine("Fail! Your team needs more skilled players to rob this bank!");
+          failedAttempts++;
+        }
       }
 
-      if (bankDifficulty > overallSkill)
-      {
-        Console.WriteLine("Fail!");
-      }
-      else
-      {
-        Console.WriteLine("Success!");
-      }
+      Console.WriteLine($"Your total trial runs ended up with {successfulAttempts} successes and {failedAttempts} failures!");
     }
   }
 }
