@@ -8,6 +8,7 @@ namespace HeistPlan
     static void Main(string[] args)
     {
       Console.WriteLine("Plan your heist!");
+      int bankDifficulty = 100;
 
       List<Dictionary<string, string>> team = new List<Dictionary<string, string>>();
 
@@ -42,6 +43,23 @@ namespace HeistPlan
         {
           Console.WriteLine($"The {facts.Key} is {facts.Value}.");
         }
+      }
+
+      int overallSkill = 0;
+
+      foreach (Dictionary<string, string> member in team)
+      {
+        int playerSkill = int.Parse(member["skill level"]);
+        overallSkill += playerSkill;
+      }
+
+      if (bankDifficulty > overallSkill)
+      {
+        Console.WriteLine("Fail!");
+      }
+      else
+      {
+        Console.WriteLine("Success!");
       }
     }
   }
