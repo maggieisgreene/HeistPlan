@@ -8,7 +8,8 @@ namespace HeistPlan
     static void Main(string[] args)
     {
       Console.WriteLine("Plan your heist!");
-      int bankDifficulty = 100;
+      Console.WriteLine("What is the difficulty level of the bank you are robbing?");
+      int bankDifficulty = int.Parse(Console.ReadLine());
 
       List<Dictionary<string, string>> team = new List<Dictionary<string, string>>();
 
@@ -45,6 +46,15 @@ namespace HeistPlan
         }
       }
 
+      Console.WriteLine("How many trial runs would you like to undergo?");
+      int trialRuns = int.Parse(Console.ReadLine());
+
+      int failedAttempts = 0;
+      int successfulAttempts = 0;
+
+      int randomLuck = new Random().Next(-10, 11);
+      int successRate = bankDifficulty + randomLuck;
+
       int overallSkill = 0;
 
       foreach (Dictionary<string, string> member in team)
@@ -52,6 +62,9 @@ namespace HeistPlan
         int playerSkill = int.Parse(member["skill level"]);
         overallSkill += playerSkill;
       }
+
+      Console.WriteLine($"The bank's level of difficulty is {successRate}.");
+      Console.WriteLine($"Your team's overall skill level is {overallSkill}.");
 
       if (bankDifficulty > overallSkill)
       {
