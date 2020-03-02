@@ -52,28 +52,35 @@ namespace HeistPlan
       int failedAttempts = 0;
       int successfulAttempts = 0;
 
-      int randomLuck = new Random().Next(-10, 11);
-      int successRate = bankDifficulty + randomLuck;
-
-      int overallSkill = 0;
-
-      foreach (Dictionary<string, string> member in team)
+      for (int i = 0; i < trialRuns; i++)
       {
-        int playerSkill = int.Parse(member["skill level"]);
-        overallSkill += playerSkill;
+        int randomLuck = new Random().Next(-10, 11);
+        int successRate = bankDifficulty + randomLuck;
+
+        int overallSkill = 0;
+
+        foreach (Dictionary<string, string> member in team)
+        {
+          int playerSkill = int.Parse(member["skill level"]);
+          overallSkill += playerSkill;
+        }
+
+        Console.WriteLine($"The bank's level of difficulty is {successRate}.");
+        Console.WriteLine($"Your team's overall skill level is {overallSkill}.");
+
+        if (successRate <= overallSkill)
+        {
+          Console.WriteLine("Success! Your team had enough skill to rob this bank!");
+          successfulAttempts++;
+        }
+        else
+        {
+          Console.WriteLine("Fail! Your team needs more skilled players to rob this bank!");
+          failedAttempts++;
+        }
       }
 
-      Console.WriteLine($"The bank's level of difficulty is {successRate}.");
-      Console.WriteLine($"Your team's overall skill level is {overallSkill}.");
-
-      if (bankDifficulty > overallSkill)
-      {
-        Console.WriteLine("Fail!");
-      }
-      else
-      {
-        Console.WriteLine("Success!");
-      }
+      Console.WriteLine($"Your total trial runs ended up with {successfulAttempts} successes and {failedAttempts} failures!");
     }
   }
 }
